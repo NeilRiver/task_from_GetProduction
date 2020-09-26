@@ -1,0 +1,7 @@
+getAllList {
+  	getAllList{
+      id
+      title
+      text
+    }
+}
