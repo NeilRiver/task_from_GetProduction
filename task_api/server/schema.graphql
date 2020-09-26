@@ -1,0 +1,10 @@
+type List {
+  id: ID
+  title: String!
+  text: String!
+}
+
+type Query {
+  getAllList: [List]!
+  getListById(id: ID!):List!
+}
