@@ -6,6 +6,8 @@ import App from "./App";
 import "./index.css";
 import { gql } from "apollo-boost";
 
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 const client = new ApolloClient({
   uri: "http://192.168.0.102:3005/graphql",
 });

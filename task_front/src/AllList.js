@@ -20,12 +20,12 @@ function AllList() {
   const { data, loading } = useQuery(all_list);
   console.log(data);
   return (
-    <div className="1">
-      
+    
+      <>
       {loading && <div>Loading...</div>}
       {!loading && data.getAllList && (
-        <div>
-         
+        <div style={{display:"flex",justifyContent: 'center'}}>
+         <div style={{minWidth:'75%'}}>
           {data.getAllList.map((value) => (
 
             <div className={styles.getAllList} onClick={()=>alert(value.id)}>
@@ -36,13 +36,14 @@ function AllList() {
                   <div>
                   {value.text}
                   </div>
-                </div>
+                  </div>
                 </div>
             </div>
           ))}
         </div>
+      </div>
       )}
-    </div>
+    </>
   );
 }
 
