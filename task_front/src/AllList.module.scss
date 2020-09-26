@@ -1,0 +1,27 @@
+@import "./App.css";
+
+.wrap {
+  display: flex;
+  flex-direction: row;
+  margin: 15px;
+  transition: 0.3s linear;
+}
+
+.getAllList :hover {
+  cursor: pointer;
+  box-shadow: 0 0 0 2px white, 0 0 0 3px #3a2f28;
+}
+
+.avatar {
+  pointer-events: none;
+  height: 240px;
+  width: 240px;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+.subtitle {
+  pointer-events: none;
+  margin-left: 15px;
+  display: flex;
+  flex-direction: column;
+}

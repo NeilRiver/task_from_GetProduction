@@ -1,5 +1,6 @@
 type List {
   id: ID
+  url: String!
   title: String!
   text: String!
 }
