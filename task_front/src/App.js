@@ -29,9 +29,6 @@ const listById = gql` query getListById($id: ID!) {
 }
 `;
 
-
-
-
 const fakeAuth = {
   isAuthenticated: false,
   authenticate(cb) {
@@ -177,29 +174,30 @@ function App() {
         <PrivateRoute path="/">
 
 
-           { data === undefined? null  : 
-             (
-             <Redirect
+     
+
+     
+          {selectedList && data !== undefined
+          ?
+          <>
+        <Switch>
+          
+          <Route path="/:id" children={<Child 
+          title = {data.getListById.title}
+          text = {data.getListById.text}
+          url = {data.getListById.url}
+          />} 
+          
+          />
+         
+        </Switch> 
+        <Redirect
              to={{
                pathname: '/'+data.getListById.id
               
              }}
            />
-             )       
-          }
-
-           { data === undefined? null : 
-                  <Switch>
-                  <Route path="/:id" children={<Child 
-                  title = {data.getListById.title}
-                  text = {data.getListById.text}
-                  url = {data.getListById.url}
-                  />} />
-                </Switch>
-             
-           }
-          {selectedList
-          ? null 
+        </>
           :<AllList onSelect={list => setSelectedList(list.id)} />
           }
           </PrivateRoute>
