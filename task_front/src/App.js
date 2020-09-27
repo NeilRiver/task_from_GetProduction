@@ -1,8 +1,11 @@
-import React from "react";
+import React,{ useState } from "react";
 import AllList from "./AllList";
 import "./App.css";
 import Nav from 'react-bootstrap/Nav';
 import Button from 'react-bootstrap/Button';
+import styles from './AllList.module.scss'
+import { useQuery } from "@apollo/react-hooks";
+import { gql } from "apollo-boost";
 
 import {
   BrowserRouter as Router,
@@ -11,8 +14,22 @@ import {
   Link,
   Redirect,
   useHistory,
-  useLocation
+  useLocation,
+  useParams
 } from "react-router-dom";
+
+
+const listById = gql` query getListById($id: ID!) {
+      getListById(id: $id) {
+		id
+		url
+		title
+		text 
+	}
+}
+`;
+
+
 
 
 const fakeAuth = {
@@ -32,7 +49,7 @@ function LoginPage() {
   let history = useHistory();
   let location = useLocation();
 
-  let { from } = location.state || { from: { pathname: "/" } };
+  let { from } = location.state || { from: { pathname: "/" } } ;
   let login = () => {
     fakeAuth.authenticate(() => {
       history.replace(from);
@@ -87,8 +104,39 @@ function PrivateRoute({ children, ...rest }) {
   );
 }
 
+function Child(props) {
+
+  let { id } = useParams();
+
+  return (
+    <div style={{height:'100vh'}}className={styles.getAllList}>
+    <div className={styles.wrap}>
+    <div className={styles.avatar} style={{backgroundImage: `url(${props.url})`}}> </div>
+      <div className={styles.subtitle}>
+      {props.title} id[{id}]
+        <div>
+        {props.text}
+        </div>
+        </div>
+      </div>
+  </div>
+
+  );
+}
+
 
 function App() {
+
+  const [selectedList, setSelectedList] = useState();
+
+  
+  const { data, loading } = useQuery(listById, {
+    variables: {
+      id: selectedList
+    }
+  });
+  
+  console.log('ByID-->',data)
   return (
     <Router>
     <div className="App">
@@ -99,13 +147,17 @@ function App() {
           onSelect={(selectedKey) => alert(`selected ${selectedKey}`)}
         >
           <Nav.Item>
-            <Nav.Link>
-              <Link to="/">Batcave</Link>
+            <Nav.Link > 
+              <Link onClick={()=>setSelectedList()} to="/">Batcave</Link>
             </Nav.Link>
-          </Nav.Item>
+          </Nav.Item >
           <Switch>
             
           <AuthButton />
+
+          
+           
+          
 
           {/* <Link to="/login"> 
             <Button style={{minWidth:'120px', alignSelf: 'center', marginRight:'16px' }}variant="dark">
@@ -118,11 +170,38 @@ function App() {
         </Nav>
       </header>
       <Switch>
+  
         <Route path="/login">
             <LoginPage />
         </Route>
         <PrivateRoute path="/">
-        <AllList />
+
+
+           { data === undefined? null  : 
+             (
+             <Redirect
+             to={{
+               pathname: '/'+data.getListById.id
+              
+             }}
+           />
+             )       
+          }
+
+           { data === undefined? null : 
+                  <Switch>
+                  <Route path="/:id" children={<Child 
+                  title = {data.getListById.title}
+                  text = {data.getListById.text}
+                  url = {data.getListById.url}
+                  />} />
+                </Switch>
+             
+           }
+          {selectedList
+          ? null 
+          :<AllList onSelect={list => setSelectedList(list.id)} />
+          }
           </PrivateRoute>
       </Switch>
     </div>

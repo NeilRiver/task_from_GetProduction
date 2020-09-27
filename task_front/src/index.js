@@ -15,13 +15,13 @@ const client = new ApolloClient({
 client
   .query({
     query: gql`
-      query getAllList {
-        getAllList {
-          id
-          title
-          text
-        }
-      }
+      query getListById {
+  	  getListById(id:1){
+      id
+      title
+      text
+    }
+}
     `,
   })
   .then((result) => console.log(result));

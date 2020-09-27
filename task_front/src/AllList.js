@@ -16,7 +16,7 @@ const all_list = gql`
   }
 `;
 
-function AllList() {
+function AllList(props) {
   const { data, loading } = useQuery(all_list);
   console.log(data);
   return (
@@ -28,7 +28,7 @@ function AllList() {
          <div style={{minWidth:'75%'}}>
           {data.getAllList.map((value) => (
 
-            <div className={styles.getAllList} onClick={()=>alert(value.id)}>
+            <div className={styles.getAllList}  onClick={() => props.onSelect(value)}>
               <div className={styles.wrap}>
               <div className={styles.avatar} style={{backgroundImage: `url(${value.url})`}}> </div>
                 <div className={styles.subtitle}>
