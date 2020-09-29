@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import AllList from "./AllList";
 import "./App.css";
 import Button from "react-bootstrap/Button";
-import Card from "./Onecard.js";
+import Card from "./CardWrapper.js";
 
 import {
   BrowserRouter as Router,
