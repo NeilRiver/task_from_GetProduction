@@ -1,16 +1,12 @@
 import React from "react";
 import Nav from "react-bootstrap/Nav";
 import Button from "react-bootstrap/Button";
-import {
-  Switch,
-  Link,
-  useHistory,
-} from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
-function AuthButton() {
+function AuthButton(props) {
   let history = useHistory();
 
-  return fakeAuth.isAuthenticated ? (
+  return props.fakeAuth.isAuthenticated ? (
     <p>
       <Button
         style={{
@@ -21,7 +17,7 @@ function AuthButton() {
         }}
         variant="dark"
         onClick={() => {
-          fakeAuth.signout(() => history.push("/"));
+          props.fakeAuth.signout(() => history.push("/"));
         }}
       >
         Bat Off
@@ -32,19 +28,10 @@ function AuthButton() {
   );
 }
 
-const fakeAuth = {
-  isAuthenticated: false,
-  authenticate(cb) {
-    fakeAuth.isAuthenticated = true;
-    setTimeout(cb, 100); // fake async
-  },
-  signout(cb) {
-    fakeAuth.isAuthenticated = false;
-    setTimeout(cb, 100);
-  },
-};
-
 function Header(props) {
+  console.log(props);
+  let history = useHistory();
+
   return (
     <Nav
       style={{
@@ -57,14 +44,10 @@ function Header(props) {
     >
       <Nav.Item>
         <Nav.Link>
-          <Link onClick={() => props.setSelectedList()} to="/">
-            Batcave
-          </Link>
+          <Link onClick={() => history.push("/")}>Batcave</Link>
         </Nav.Link>
       </Nav.Item>
-      <Switch>
-        <AuthButton />
-      </Switch>
+      <AuthButton fakeAuth={props.fakeAuth} />
     </Nav>
   );
 }

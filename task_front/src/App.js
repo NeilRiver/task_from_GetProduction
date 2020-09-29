@@ -23,6 +23,7 @@ const fakeAuth = {
     fakeAuth.isAuthenticated = false;
     setTimeout(cb, 100);
   },
+  
 };
 
 function LoginPage() {
@@ -77,6 +78,7 @@ function PrivateRoute({ children, ...rest }) {
 }
 
 function App() {
+  
   const [selectedList, setSelectedList] = useState();
 
   useEffect(() => {
@@ -87,19 +89,29 @@ function App() {
     );
   }, [selectedList]);
 
-  console.log(selectedList);
-  console.log(useEffect);
   return (
     <Router>
       <div className="App">
-        <Header setSelectedList={setSelectedList} />
+      <Switch>
+        <Header fakeAuth={fakeAuth} />
+        </Switch>
         <Switch>
-          <Route path="/:id">
+          <Route path="/login">
+            <LoginPage />
+          </Route>
+          {/* <Route path="/:id">
             <Card />
-          </Route>
-          <Route path="/">
+          </Route> */}
+          {/* <Route path="/">
             <AllList onSelect={(list) => setSelectedList(list.id)} />
-          </Route>
+          </Route> */}
+
+          <PrivateRoute path="/">
+            <Route path="/:id">
+              <Card />
+            </Route>
+            <AllList onSelect={(list) => setSelectedList(list.id)} />
+          </PrivateRoute>
         </Switch>
       </div>
     </Router>
