@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import AllList from "./AllList";
 import "./App.css";
 import Button from "react-bootstrap/Button";
 import Card from "./CardWrapper.js";
-
+import Header from "./Header";
 import {
   BrowserRouter as Router,
   Switch,
@@ -12,7 +12,6 @@ import {
   useHistory,
   useLocation,
 } from "react-router-dom";
-import Header from "./Header";
 
 const fakeAuth = {
   isAuthenticated: false,
@@ -80,6 +79,16 @@ function PrivateRoute({ children, ...rest }) {
 function App() {
   const [selectedList, setSelectedList] = useState();
 
+  useEffect(() => {
+    return () => (
+      <Route exact path="/">
+        <Redirect to="/dashboard" />
+      </Route>
+    );
+  }, [selectedList]);
+
+  console.log(selectedList);
+  console.log(useEffect);
   return (
     <Router>
       <div className="App">

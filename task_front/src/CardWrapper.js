@@ -23,14 +23,9 @@ export default function Child(props) {
       id,
     },
   });
-
-  console.log("CARD", data);
-  console.log("CARD", id);
-
   return !loading ? (
     error ? (
       <Card
-        id={id}
         url="https://clck.ru/R8Nxg"
         title="Мое лицо"
         text="Когда ты вводишь неправильную ссылку"
