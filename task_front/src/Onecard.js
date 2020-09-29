@@ -21,7 +21,6 @@ export default function Child(props) {
 
   const { data, loading } = useQuery(listById, {
     variables: {
-      // id: selectedList,
       id,
     },
   });
@@ -29,7 +28,7 @@ export default function Child(props) {
   console.log("CARD", data);
   console.log("CARD", id);
 
-  return !loading?(
+  return !loading ? (
     <div style={{ height: "100vh" }} className={styles.getAllList}>
       <div className={styles.wrap}>
         <div
@@ -37,10 +36,12 @@ export default function Child(props) {
           style={{ backgroundImage: `url(${data.getListById.url})` }}
         ></div>
         <div className={styles.subtitle}>
-          {data.getListById.title} id[{data.getListById.id}]<div>{data.getListById.text}</div>
+          {data.getListById.title} id[{data.getListById.id}]
+          <div>{data.getListById.text}</div>
         </div>
       </div>
     </div>
-  ):
-  'Loading';
+  ) : (
+    "Loading"
+  );
 }
