@@ -1,34 +1,18 @@
 import React, { useState } from "react";
 import AllList from "./AllList";
 import "./App.css";
-
 import Button from "react-bootstrap/Button";
-import { useQuery } from "@apollo/react-hooks";
-import { gql } from "apollo-boost";
 import Card from "./Onecard.js";
 
 import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link,
   Redirect,
   useHistory,
   useLocation,
-  useParams,
 } from "react-router-dom";
 import Header from "./Header";
-
-const listById = gql`
-  query getListById($id: ID!) {
-    getListById(id: $id) {
-      id
-      url
-      title
-      text
-    }
-  }
-`;
 
 const fakeAuth = {
   isAuthenticated: false,
@@ -96,20 +80,18 @@ function PrivateRoute({ children, ...rest }) {
 function App() {
   const [selectedList, setSelectedList] = useState();
 
-  const { data, loading } = useQuery(listById, {
-    variables: {
-      id: selectedList,
-    },
-  });
-
   return (
     <Router>
       <div className="App">
-        <header className="App-header">
-          <Header setSelectedList={setSelectedList} />
-        </header>
-        <Card></Card>
-        <AllList onSelect={(list) => setSelectedList(list.id)} />
+        <Header setSelectedList={setSelectedList} />
+        <Switch>
+          <Route path="/:id">
+            <Card />
+          </Route>
+          <Route path="/">
+            <AllList onSelect={(list) => setSelectedList(list.id)} />
+          </Route>
+        </Switch>
       </div>
     </Router>
   );
