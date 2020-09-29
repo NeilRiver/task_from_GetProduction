@@ -1,6 +1,5 @@
 import React from "react";
 import { useQuery } from "@apollo/react-hooks";
-import getAllList from "./getAllList.graphql";
 import gql from "graphql-tag";
 
 import styles from './AllList.module.scss'
@@ -27,7 +26,6 @@ function AllList(props) {
         <div style={{display:"flex",justifyContent: 'center'}}>
          <div style={{minWidth:'75%'}}>
           {data.getAllList.map((value) => (
-
             <div className={styles.getAllList}  onClick={() => props.onSelect(value)}>
               <div className={styles.wrap}>
               <div className={styles.avatar} style={{backgroundImage: `url(${value.url})`}}> </div>
