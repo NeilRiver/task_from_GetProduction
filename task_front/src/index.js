@@ -1,21 +1,24 @@
 import React from "react";
-import ReactDOM from "react-dom";
-import ApolloClient from "apollo-boost";
-import { ApolloProvider } from "@apollo/react-hooks";
-import App from "./App";
-import "./index.css";
+import { render } from "react-dom";
 
+import { ApolloProvider } from "@apollo/client";
+import { ApolloClient, InMemoryCache } from "@apollo/client";
+
+import "./index.css";
 import "bootstrap/dist/css/bootstrap.min.css";
+import App from "./App";
 
 const client = new ApolloClient({
-  uri: "http://192.168.0.102:3005/graphql",
+  uri: "http://localhost:3005/graphql",
+  cache: new InMemoryCache(),
 });
 
-ReactDOM.render(
-  <React.StrictMode>
+function Index() {
+  return (
     <ApolloProvider client={client}>
       <App />
     </ApolloProvider>
-  </React.StrictMode>,
-  document.getElementById("root")
-);
+  );
+}
+
+render(<Index />, document.getElementById("root"));
