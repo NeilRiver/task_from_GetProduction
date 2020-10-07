@@ -97,16 +97,10 @@ function App() {
           <Route path="/login">
             <LoginPage />
           </Route>
-          {/* <Route path="/:id">
+          <PrivateRoute path="/:id">
             <Card />
-          </Route> */}
-          {/* <Route path="/">
-            <AllList onSelect={(list) => setSelectedList(list.id)} />
-          </Route> */}
+          </PrivateRoute>
           <PrivateRoute path="/">
-            <Route path="/:id">
-              <Card />
-            </Route>
             <AllList onSelect={(list) => setSelectedList(list.id)} />
           </PrivateRoute>
         </Switch>
