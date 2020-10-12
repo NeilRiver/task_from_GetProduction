@@ -1,35 +1,35 @@
-import React from "react";
-import { useQuery, gql } from "@apollo/client";
+import React, { useState, useEffect } from "react";
 import styles from "./AllList.module.scss";
 import { useHistory } from "react-router-dom";
 
-const all_list = gql`
-  {
-    getAllList {
-      id
-      url
-      title
-      text
-    }
-  }
-`;
-
 function AllList(props) {
   const history = useHistory();
-
-  const { data, loading } = useQuery(all_list);
 
   const handleOnSubmit = (id) => {
     history.push(`/${id}`);
   };
 
+  const [data, setCount] = useState(0);
+
+  useEffect(() => {
+    async function fetchMyAPI() {
+      let response = await fetch("http://localhost:3005/all");
+      response = await response.json();
+      setCount(response);
+    }
+    fetchMyAPI();
+  }, []);
+
+  console.log(data);
+
   return (
     <>
-      {loading && <div>Loading...</div>}
-      {!loading && data.getAllList && (
+      {data === 0 ? (
+        <div>Loading...</div>
+      ) : (
         <div style={{ display: "flex", justifyContent: "center" }}>
           <div style={{ minWidth: "75%" }}>
-            {data.getAllList.map((value) => (
+            {data.map((value) => (
               <div
                 className={styles.getAllList}
                 onClick={() => handleOnSubmit(value.id)}

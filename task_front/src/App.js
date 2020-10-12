@@ -29,6 +29,7 @@ function LoginPage() {
   let history = useHistory();
   let location = useLocation();
 
+
   let { from } = location.state || { from: { pathname: "/" } };
   let login = () => {
     fakeAuth.authenticate(() => {
@@ -86,6 +87,9 @@ function App() {
       </Route>
     );
   }, [selectedList]);
+
+
+  
 
   return (
     <Router>

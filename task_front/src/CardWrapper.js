@@ -1,43 +1,16 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import { useQuery, gql } from "@apollo/client";
-import Card from "./Card";
 
-const listById = gql`
-  query getListById($id: ID!) {
-    getListById(id: $id) {
-      id
-      url
-      title
-      text
-    }
-  }
-`;
+import Card from "./Card";
 
 export default function Child(props) {
   let { id } = useParams();
 
-  const { data, loading, error } = useQuery(listById, {
-    variables: {
-      id,
-    },
-  });
-  return !loading ? (
-    error ? (
-      <Card
-        url="https://clck.ru/R8Nxg"
-        title="Мое лицо"
-        text="Когда ты вводишь неправильную ссылку"
-      />
-    ) : (
-      <Card
-        id={data.getListById.id}
-        url={data.getListById.url}
-        title={data.getListById.title}
-        text={data.getListById.text}
-      />
-    )
-  ) : (
-    "Loading"
+  return (
+    <Card
+      url="https://clck.ru/R8Nxg"
+      title="Мое лицо"
+      text="Когда ты вводишь неправильную ссылку"
+    />
   );
 }

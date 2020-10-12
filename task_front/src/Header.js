@@ -29,7 +29,7 @@ function AuthButton(props) {
 }
 
 function Header(props) {
-  console.log(props);
+
   let history = useHistory();
 
   return (
